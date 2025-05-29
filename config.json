@@ -1,18 +1,18 @@
 {
     "wechat": {
-        "AppID": "",
-        "AppSecret": "",
-        "access_token": ""
+        "AppID": "wxb3082d7780150b90",
+        "AppSecret": "c03e56a7728ba9bd87a1673dd6851eb6",
+        "access_token": "92_JDRQQTvzjATx84KmqH9qXf6kNsHKYESe7GSL17CeCK4Q5bVoabufZSl6pSp9dd97rNrOxIe6pnQtmc42mm83ntS0p15GbNjOACpKYF5aXVaj5uVEkm9v1ufvYFQDOUfAEALWC"
     },
     "weather": {
-        "gd_key": "",
+        "gd_key": "4f5a40a669b56882fe86809c26433e08",
         "hf_key": ""
     },
     "template": {
         "touser": [
-            "",
-            ""
+            "o63nA7ccxumuvYuHZoqaxWGVIAKo",
+            "o63nA7epqUGoyUy1MWjSBix7tLYA"
         ],
-        "template_id": ""
+        "template_id": "XelyOOxK2RP279juDrw7q4JbH-zgWwadMSwU8RFORmY"
     }
 }

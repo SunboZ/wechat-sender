@@ -98,15 +98,8 @@ def get_weather(location):
     data1 = response1.json()
     print(data1)
 
-    # 获取城市id
-    city_id_url2 = r'https://geoapi.qweather.com/v2/city/lookup?location={0}&key={1}'.format(
-        location, config['weather']['hf_key'])
-    response_id = requests.get(city_id_url2)
-    data_id = response_id.json()
-    hf_cityid = data_id['location'][0]['id']
 
-    url2 = r'https://devapi.qweather.com/v7/weather/3d?location={0}&key={1}'.format(
-        hf_cityid, config['weather']['hf_key'])
+    url2 = r'https://restapi.amap.com/v3/weather/weatherInfo?city=320583&extensions=all&output&Key=4f5a40a669b56882fe86809c26433e08'
     response2 = requests.get(url2)
     data2 = response2.json()
     print(data2)
@@ -118,31 +111,32 @@ def get_weather(location):
     # print(data3)
     # 城市
     city = data1['lives'][0]['city']
+    today_wheather = data2["forecasts"][0]["casts"][0]
     # 温度
     temp = {}
-    temp['today'] = data2['daily'][0]['tempMin'] + u'°C' + '~' + data2['daily'][0]['tempMax'] + u'°C'
+    temp['today'] = today_wheather['nighttemp'] + u'°C' + '~' + today_wheather['daytemp'] + u'°C'
     temp['now'] = data1['lives'][0]['temperature'] + u'°C'
     #
     # 天气状况
     weather = {}
-    weather['now'] = data1['lives'][0]['weather']
-    weather['day'] = data2['daily'][0]['textDay']
-    weather['night'] = data2['daily'][0]['textNight']
-    weather['text'] = u"今天白天有" + data2['daily'][0]['textDay'] + u"，" + u"夜晚有" + data2['daily'][0]['textNight']
+    weather['now'] = today_wheather['dayweather']
+    weather['day'] = today_wheather['dayweather']
+    weather['night'] = today_wheather['nightweather']
+    weather['text'] = None
 
     # 风向
     win = data1['lives'][0]['winddirection'] + u'风 ' + data1['lives'][0]['windpower'] + u'级'
 
     # 日期
-    date = data2['daily'][0]['fxDate']
+    date = today_wheather["date"]
 
     sum_time = {}
     # 日出和日落时间
-    sum_time["sunrise"] = data2['daily'][0]['sunrise']
-    sum_time["sunset"] = data2['daily'][0]['sunset']
+    sum_time["sunrise"] = None
+    sum_time["sunset"] = None
 
-    return {'link': data2['fxLink'], 'date': date, 'city': city, 'temp': temp, 'wea': weather, 'win': win,
-            "sun_time": sum_time}
+    return {'link': "fxlink", 'date': date, 'city': city, 'temp': temp, 'wea': weather, 'win': win,
+            "sun_time": "sum_time"}
 
 
 # 彩虹屁
@@ -231,12 +225,14 @@ if __name__ == '__main__':
 
     # 从配置中获取token
     token =  config["wechat"]["access_token"]
-    info = get_weather(location="北京")  # 获取天气信息 # 把这里的location改为自己城市名字
+    info = get_weather(location="昆山")  # 获取天气信息 # 把这里的location改为自己城市名字
     rainbow_text = get_rainbow()
 
     # 要推送的用户
-    touser = config["template"]["touser"][0]
-    send_message(touser, token, info, rainbow_text)
+    for user in config["template"]["touser"]:
+        send_message(user, token, info, rainbow_text)
+    # touser = config["template"]["touser"][1]
+    # send_message(touser, token, info, rainbow_text)
 
     # 推送给多个用户：用for循环即可
     # 循环推送

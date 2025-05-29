@@ -111,6 +111,7 @@ def send_message(touser, token, info=None, rainbow_text=None):
         }
     }
     response = requests.post(url=url, data=json.dumps(data))
+    print(response.json())
     if response.json()['errmsg'] == 'ok':
         print('\033[91m' + '推送成功' + '\033[0m')  # 输出红色文字
     else:

@@ -4,6 +4,7 @@
 
 import requests
 import json
+import datetime
 import os
 
 config_path = os.path.join(os.path.dirname(__file__), "config.json")
@@ -114,8 +115,8 @@ def get_weather(location):
     today_wheather = data2["forecasts"][0]["casts"][0]
     # 温度
     temp = {}
-    temp['today'] = today_wheather['nighttemp'] + u'°C' + '~' + today_wheather['daytemp'] + u'°C'
-    temp['now'] = data1['lives'][0]['temperature'] + u'°C'
+    temp['night'] = today_wheather['nighttemp'] + u'°C'
+    temp['day'] = today_wheather['daytemp'] + u'°C'
     #
     # 天气状况
     weather = {}
@@ -153,6 +154,32 @@ def get_rainbow():
     return data["hitokoto"]
 
 
+# 纪念日
+def get_love_day():
+    """
+        计算距离纪念日的天数。
+        Returns:
+            int: 距离纪念日的天数。
+    """
+    import datetime
+    # 这里修改成自己的纪念日时间
+    love_day = datetime.date(2025, 4, 15)
+    now = datetime.datetime.now().date()
+    delta = now - love_day
+    return delta.days + 1
+
+
+# 星期
+def get_week():
+    """
+        获取当前星期。
+        Returns:
+            str: 当前星期的中文名称。
+    """
+    week = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
+    return week[datetime.datetime.now().weekday()]
+
+
 # 发送消息
 def send_message(touser, token, info, rainbow_text):
     """
@@ -178,14 +205,6 @@ def send_message(touser, token, info, rainbow_text):
                 "value": info['city'],
                 "color": "#000"
             },
-            "weather_text":{
-                "value": info['wea']['text'],
-                "color": "#000"
-            },
-            "weather_now": {
-                "value": info['wea']['now'],
-                "color": "#000"
-            },
             "weather_day": {
                 "value": info['wea']['day'],
                 "color": "#000"
@@ -194,22 +213,26 @@ def send_message(touser, token, info, rainbow_text):
                 "value": info['wea']['night'],
                 "color": "#000"
             },
-            "temprature_now": {
-                "value": info['temp']['now'],
+            "temprature_day": {
+                "value": info['temp']['day'],
                 "color": "#000"
             },
-            "temprature_today": {
-                "value": info['temp']['today'],
-                "color": "#000"
-            },
-            "win": {
-                "value": info['win'],
+            "temprature_night": {
+                "value": info['temp']['night'],
                 "color": "#000"
             },
             "rainbow": {
                 "value": rainbow_text,
                 "color": "#000"
-            }
+            },
+            "love_day": {
+                "value": get_love_day(),
+                "color": "#000"
+            },
+            "weektext": {  # 星期
+                "value": get_week(),
+                "color": "#000"
+            },
         }
     }
     response = requests.post(url=url, data=json.dumps(data))

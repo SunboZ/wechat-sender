@@ -2,7 +2,7 @@
     "wechat": {
         "AppID": "wxb3082d7780150b90",
         "AppSecret": "c03e56a7728ba9bd87a1673dd6851eb6",
-        "access_token": "92_JDRQQTvzjATx84KmqH9qXf6kNsHKYESe7GSL17CeCK4Q5bVoabufZSl6pSp9dd97rNrOxIe6pnQtmc42mm83ntS0p15GbNjOACpKYF5aXVaj5uVEkm9v1ufvYFQDOUfAEALWC"
+        "access_token": "92_GgCIVnXTfHMw9uQyvUw-yIyg6mg2Q9FeEK4Dwkxb_kv-R4cyZH961VMputnIyHitHgDMWltMS_NSt5LoyPMvm1BxPZRVXkDYO08AmhI5cWJLDZkaE0wftdkLu6QKSWaAEANVZ"
     },
     "weather": {
         "gd_key": "4f5a40a669b56882fe86809c26433e08",
@@ -13,6 +13,6 @@
             "o63nA7ccxumuvYuHZoqaxWGVIAKo",
             "o63nA7epqUGoyUy1MWjSBix7tLYA"
         ],
-        "template_id": "XelyOOxK2RP279juDrw7q4JbH-zgWwadMSwU8RFORmY"
+        "template_id": "reSRPU215LX0qYc8TwTu3v2ExEQH8NIcM2X-Gnenra4"
     }
 }

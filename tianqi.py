@@ -222,7 +222,7 @@ def send_night_msg(touser, token, messages):
     data = {
         "touser": touser,
         "template_id": "4yN3vxMln6jjiSH8X0pRYHfLpqGJFPcZLtE1PYWLzWw",
-        "url": "link",
+        "url": "https://www.qweather.com/",
         "topcolor": "#FF0000",
         "data": {
             "row1": {  # 星期

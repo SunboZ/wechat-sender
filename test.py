@@ -5,6 +5,7 @@
 import requests
 import json
 import os
+from tianqi import llm_generate_forecast, request_amap_forecat, send_night_msg
 
 config_path = os.path.join(os.path.dirname(__file__), "config.json")
 
@@ -18,6 +19,7 @@ def read_config():
        """
     with open(config_path, 'r', encoding='utf-8') as file:
         return json.load(file)
+
 
 def updata_config():
     """
@@ -121,5 +123,8 @@ def send_message(touser, token, info=None, rainbow_text=None):
 if __name__ == '__main__':
     token = get_stable_token(config["wechat"]["AppID"], config["wechat"]["AppSecret"])
     # 要推送的用户
-    touser = config["template"]["touser"][0]
-    send_message(touser, token)
+    message = llm_generate_forecast(request_amap_forecat())
+    messages = message.split("\n")
+    for user in config["template"]["touser"]:
+        send_night_msg(user, token, messages)
+    # print(llm_generate_forecast(request_amap_forecat()))

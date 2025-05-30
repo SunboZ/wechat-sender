@@ -9,6 +9,28 @@ import os
 
 config_path = os.path.join(os.path.dirname(__file__), "config.json")
 
+
+def llm_generate_forecast(amap_data):
+    url = "https://ai-lab.feiliks.com/v1/completion-messages"
+
+    payload = json.dumps({
+    "inputs": {
+        "query": f"content是高德地图返回的昆山市天气数据，根据数据播报明日天气，今天是{datetime.date}，语气要温柔可爱，发给女朋友的。返回的内容每行十五个字以内，总共六行，每一行严格按照我指定的内容描述。第一行只描述白天和夜间天气现象，是否下雨；第二行描述只白天和夜间气温；第三行只描述风向风力；第四行只描述穿衣建议和出行建议；第五行关心她；第六行夸赞女朋友的话，夸赞的话每天不重样。不要有其他客气官方的语言。<content>{amap_data}</content>"
+    },
+    "response_mode": "blocking",
+    "user": "abc-123"
+    })
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer app-MTcrZJjaEHh4oKB9NRKSE6jE'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+    answer = response.json().get("answer")
+    print(answer)
+    return answer
+
+
 # 从config.json中读取配置信息
 def read_config():
     """
@@ -63,6 +85,21 @@ def get_stable_token(AppID=config["wechat"]["AppID"], AppSecret=config["wechat"]
     updata_config()
     return access_token
 
+
+def request_amap_forecat():
+    """
+        请求高德地图天气API获取天气数据。
+        Args:
+            location (str): 要获取天气数据的位置。
+        Returns:
+            dict: 包含天气数据的字典。
+    """
+    url2 = r'https://restapi.amap.com/v3/weather/weatherInfo?city=320583&extensions=all&output&Key=4f5a40a669b56882fe86809c26433e08'
+    response2 = requests.get(url2)
+    data2 = response2.json()
+    print(data2)
+    return data2
+    
 
 # 获取天气信息
 def get_weather(location):
@@ -178,6 +215,44 @@ def get_week():
     """
     week = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日']
     return week[datetime.datetime.now().weekday()]
+
+
+def send_night_msg(touser, token, messages):
+    url = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={0}'.format(token)
+    data = {
+        "touser": touser,
+        "template_id": "4yN3vxMln6jjiSH8X0pRYHfLpqGJFPcZLtE1PYWLzWw",
+        "url": "link",
+        "topcolor": "#FF0000",
+        "data": {
+            "row1": {  # 星期
+                "value": messages[0],
+                "color": "#000"
+            },
+            "row2": {  # 星期
+                "value": messages[1],
+                "color": "#000"
+            },
+            "row3": {  # 星期
+                "value": messages[2],
+                "color": "#000"
+            },
+            "row4": {  # 星期
+                "value": messages[3],
+                "color": "#000"
+            },
+            "row5": {  # 星期
+                "value": messages[4],
+                "color": "#000"
+            },
+            "row6": {  # 星期
+                "value": messages[5],
+                "color": "#000"
+            },
+        }
+    }
+    response = requests.post(url=url, data=json.dumps(data))
+    print(response.json())
 
 
 # 发送消息

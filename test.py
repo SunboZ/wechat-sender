@@ -5,7 +5,7 @@
 import requests
 import json
 import os
-from tianqi import llm_generate_forecast, request_amap_forecat, send_night_msg
+from tianqi import llm_generate_forecast, request_amap_forecat, send_night_msg, siliconflow_generate_forecast
 
 config_path = os.path.join(os.path.dirname(__file__), "config.json")
 
@@ -123,7 +123,7 @@ def send_message(touser, token, info=None, rainbow_text=None):
 if __name__ == '__main__':
     token = get_stable_token(config["wechat"]["AppID"], config["wechat"]["AppSecret"])
     # 要推送的用户
-    message = llm_generate_forecast(request_amap_forecat())
+    message = siliconflow_generate_forecast(request_amap_forecat())
     messages = message.split("\n")
     for user in config["template"]["touser"]:
         send_night_msg(user, token, messages)

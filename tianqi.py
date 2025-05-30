@@ -31,6 +31,55 @@ def llm_generate_forecast(amap_data):
     return answer
 
 
+def siliconflow_generate_forecast(amap_data):
+    url = "https://api.siliconflow.cn/v1/chat/completions"
+
+    payload = json.dumps({
+    "model": "Qwen/Qwen3-235B-A22B",
+    "messages": [
+        {
+            "role": "user",
+            "content": f"content是高德地图返回的昆山市天气数据，根据数据播报明日天气，今天是{datetime.date}，语气要温柔可爱，发给女朋友的。返回的内容每行二十个字以内，总共六行，每一行严格按照后面我指定的内容描述。第一行描述白天和夜间天气现象，是否下雨；第二行描述白天和夜间气温；第三行描述风向风力；第四行描述穿衣建议和出行建议；第五行关心她，每天不重样；第六行夸赞女朋友的话，每天不重样。每一行前面不要有序号，不要有多余的换行符，不要有其他客气官方的语言。<content>{amap_data}</content>"
+        }
+    ],
+    "stream": False,
+    "max_tokens": 512,
+    "enable_thinking": False,
+    "thinking_budget": 4096,
+    "min_p": 0.05,
+    "stop": None,
+    "temperature": 0.7,
+    "top_p": 0.7,
+    "top_k": 50,
+    "frequency_penalty": 0.5,
+    "n": 1,
+    "response_format": {
+        "type": "text"
+    },
+    "tools": [
+        {
+            "type": "function",
+            "function": {
+                "description": "<string>",
+                "name": "<string>",
+                "parameters": {},
+                "strict": False
+            }
+        }
+    ]
+    })
+    headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer sk-yltpjsoivurxffuqigrxmzjjhggrmvqpdnqahyrpkhxhwzjz'
+    }
+
+    response = requests.request("POST", url, headers=headers, data=payload)
+
+    answer = response.json().get("choices")[0].get("message").get("content")
+    print(answer)
+    return answer
+
+
 # 从config.json中读取配置信息
 def read_config():
     """

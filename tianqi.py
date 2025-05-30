@@ -318,7 +318,7 @@ def send_message(touser, token, info, rainbow_text):
     data = {
         "touser": touser,
         "template_id": config["template"]["template_id"],
-        "url": info['link'],
+        "url": "https://www.qweather.com/",
         "topcolor": "#FF0000",
         "data": {
             "date": {

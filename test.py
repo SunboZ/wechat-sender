@@ -6,6 +6,8 @@ import requests
 import json
 import os
 from tianqi import llm_generate_forecast, request_amap_forecat, send_night_msg, siliconflow_generate_forecast
+from wechat_official import WeChatOfficialAPI
+
 
 config_path = os.path.join(os.path.dirname(__file__), "config.json")
 
@@ -125,6 +127,7 @@ if __name__ == '__main__':
     # 要推送的用户
     message = siliconflow_generate_forecast(request_amap_forecat())
     messages = message.split("\n")
+    wechat_api = WeChatOfficialAPI()
     for user in config["template"]["touser"]:
-        send_night_msg(user, token, messages)
+        wechat_api.send_night_msg(user, messages)
     # print(llm_generate_forecast(request_amap_forecat()))

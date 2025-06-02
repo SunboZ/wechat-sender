@@ -39,7 +39,7 @@ def siliconflow_generate_forecast(amap_data):
     "messages": [
         {
             "role": "user",
-            "content": f"content是高德地图返回的昆山市天气数据，根据数据播报明日天气，今天是{datetime.date}，语气要温柔可爱，发给女朋友的。返回的内容每行二十个字以内，总共六行，每一行严格按照后面我指定的内容描述。第一行描述白天和夜间天气现象，是否下雨；第二行描述白天和夜间气温；第三行描述风向风力；第四行描述穿衣建议和出行建议；第五行关心她，每天不重样；第六行夸赞女朋友的话，每天不重样。每一行前面不要有序号，不要有多余的换行符，不要有其他客气官方的语言。<content>{amap_data}</content>"
+            "content": f"content是高德地图返回的昆山市天气数据，根据数据播报明日天气，今天是{datetime.date}，语气要温柔可爱，发给女朋友的。返回的内容包括标点符号每行十六个字以内,，总共六行，每一行严格按照后面我指定的内容描述。第一行描述白天和夜间天气现象，是否下雨；第二行描述白天和夜间气温；第三行描述风向风力；第四行描述穿衣建议和出行建议；第五行关心她，每天不重样；第六行夸赞女朋友的话，每天不重样。每一行前面不要有序号，不要有多余的换行符，不要有其他客气官方的语言。<content>{amap_data}</content>"
         }
     ],
     "stream": False,
@@ -226,19 +226,6 @@ def get_weather(location):
             "sun_time": "sum_time"}
 
 
-# 彩虹屁
-def get_rainbow():
-    """
-        获取彩虹屁。
-        Returns:
-            str: 彩虹屁文本。
-    """
-    url = 'https://v1.hitokoto.cn/'
-    response = requests.get(url)
-    data = response.json()
-    print(data["hitokoto"])
-    return data["hitokoto"]
-
 
 # 纪念日
 def get_love_day():
@@ -270,7 +257,7 @@ def send_night_msg(touser, token, messages):
     url = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={0}'.format(token)
     data = {
         "touser": touser,
-        "template_id": "4yN3vxMln6jjiSH8X0pRYHfLpqGJFPcZLtE1PYWLzWw",
+        "template_id": "DWBib-AVOP9WImcprL8gom12cymtiaInWJ0Zi7V2rSo",
         "url": "https://www.qweather.com/",
         "topcolor": "#FF0000",
         "data": {

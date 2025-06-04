@@ -19,7 +19,7 @@ class AmapAPI:
         url = urljoin(self.base_url, path)
         query_params = {
             "city": city,
-            "extension": extension,
+            "extensions": extension,
             "Key": self.key
         }
         res = requests.get(url, params=query_params)

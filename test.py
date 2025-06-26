@@ -5,7 +5,7 @@
 import requests
 import json
 import os
-from tianqi import llm_generate_forecast, request_amap_forecat, send_night_msg, siliconflow_generate_forecast
+from tianqi import llm_generate_forecast, request_amap_forecat, send_night_msg, siliconflow_generate_forecast, qwen_generate_forecast
 from wechat_official import WeChatOfficialAPI
 
 
@@ -125,7 +125,7 @@ def send_message(touser, token, info=None, rainbow_text=None):
 if __name__ == '__main__':
     token = get_stable_token(config["wechat"]["AppID"], config["wechat"]["AppSecret"])
     # 要推送的用户
-    message = siliconflow_generate_forecast(request_amap_forecat())
+    message = qwen_generate_forecast(request_amap_forecat())
     messages = message.split("\n")
     wechat_api = WeChatOfficialAPI()
     for user in config["template"]["touser"]:
